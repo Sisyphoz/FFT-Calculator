@@ -1,7 +1,7 @@
 # FFT-Calculator
 A simple FFT (Fast Fourier Transform) calculator with Web UI.
 
-To run the app, tou need to have Python 3.+ installed. Then, install the required packages by running:
+To run the app, you need to have Python 3.+ installed. Then, install the required packages by running:
 
 pip install -r requirements.txt
 
