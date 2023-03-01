@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>FFT Calculator</title>
+  </head>
+  <body>
+    <h1>FFT Calculator</h1>
+    <form id="fft-form">
+      <label for="x-input">X Values:</label>
+      <input type="text" id="x-input" name="x" required>
+      <br>
+      <label for="y-input">Y Values:</label>
+      <input type="text" id="y-input" name="y" required>
+      <br>
+      <button type="submit">Compute FFT</button>
+    </form>
+    <h2>Frequency Spectrum:</h2>
+    <ul id="freq-list"></ul>
+    <h2>Power Spectrum:</h2>
+    <ul id="power-list"></ul>
+
+    <script>
+      const form = document.getElementById('fft-form');
+      const freqList = document.getElementById('freq-list');
+      const powerList = document.getElementById('power-list');
+
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const x = event.target.elements.x.value.split(',').map(Number);
+        const y = event.target.elements.y.value.split(',').map(Number);
+        const response = await fetch('/fft', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ x, y })
+        });
+        const result = await response.json();
+        freqList.innerHTML = result.freqs.map((f) => `<li>${f.toFixed(2)}</li>`).join('');
+        powerList.innerHTML = result.power_spectrum.map((p) => `<li>${p.toFixed(2)}</li>`).join('');
+      });
+    </script>
+  </body>
+</html>
